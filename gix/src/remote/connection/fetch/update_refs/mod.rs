@@ -201,9 +201,10 @@ pub(crate) fn update(
                                     PreviousValue::MustExistAndMatch(existing.target().into_owned()),
                                 )
                             }
-                            Err(crate::reference::peel::Error::ToId(gix_ref::peel::to_id::Error::FollowToObject(
-                                gix_ref::peel::to_object::Error::Follow(_),
-                            ))) => {
+                            Err(crate::reference::peel::Error::ToId(
+                                gix_ref::peel::to_id::Error::FollowToObject(gix_ref::peel::to_object::Error::Follow(_))
+                                | gix_ref::peel::to_id::Error::NotFound { .. },
+                            )) => {
                                 // An unborn reference, always allow it to be changed to whatever the remote wants.
                                 (
                                     if existing.target().try_name().map(gix_ref::FullNameRef::as_bstr)
