@@ -369,8 +369,8 @@ impl super::Store {
         } else {
             index.generation
         };
-        let index_unchanged = index.slot_indices == new_slot_map_indices;
-        if generation != index.generation {
+        let index_unchanged = dbg!(&index.slot_indices) == dbg!(&new_slot_map_indices);
+        if dbg!(generation) != dbg!(index.generation) {
             assert!(
                 !index_unchanged,
                 "if the generation changed, the slot index must have changed for sure"
